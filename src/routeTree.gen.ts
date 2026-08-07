@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CompaniesRouteImport } from './routes/companies'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as ExperiencesIndexRouteImport } from './routes/experiences.index'
+import { Route as ExperiencesNewRouteImport } from './routes/experiences.new'
+import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
+import { Route as ResourcesNewRouteImport } from './routes/resources.new'
+import { Route as ExperiencesIdIndexRouteImport } from './routes/experiences.$id.index'
+import { Route as ExperiencesIdEditRouteImport } from './routes/experiences.$id.edit'
+import { Route as ResourcesIdEditRouteImport } from './routes/resources.$id.edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompaniesRoute = CompaniesRouteImport.update({
+  id: '/companies',
+  path: '/companies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExperiencesIndexRoute = ExperiencesIndexRouteImport.update({
+  id: '/experiences/',
+  path: '/experiences/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExperiencesNewRoute = ExperiencesNewRouteImport.update({
+  id: '/experiences/new',
+  path: '/experiences/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
+  id: '/resources/',
+  path: '/resources/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesNewRoute = ResourcesNewRouteImport.update({
+  id: '/resources/new',
+  path: '/resources/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExperiencesIdIndexRoute = ExperiencesIdIndexRouteImport.update({
+  id: '/experiences/$id/',
+  path: '/experiences/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExperiencesIdEditRoute = ExperiencesIdEditRouteImport.update({
+  id: '/experiences/$id/edit',
+  path: '/experiences/$id/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesIdEditRoute = ResourcesIdEditRouteImport.update({
+  id: '/resources/$id/edit',
+  path: '/resources/$id/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/companies': typeof CompaniesRoute
+  '/dashboard': typeof DashboardRoute
+  '/search': typeof SearchRoute
+  '/experiences/new': typeof ExperiencesNewRoute
+  '/resources/new': typeof ResourcesNewRoute
+  '/experiences/': typeof ExperiencesIndexRoute
+  '/resources/': typeof ResourcesIndexRoute
+  '/experiences/$id/edit': typeof ExperiencesIdEditRoute
+  '/resources/$id/edit': typeof ResourcesIdEditRoute
+  '/experiences/$id/': typeof ExperiencesIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/companies': typeof CompaniesRoute
+  '/dashboard': typeof DashboardRoute
+  '/search': typeof SearchRoute
+  '/experiences/new': typeof ExperiencesNewRoute
+  '/resources/new': typeof ResourcesNewRoute
+  '/experiences': typeof ExperiencesIndexRoute
+  '/resources': typeof ResourcesIndexRoute
+  '/experiences/$id/edit': typeof ExperiencesIdEditRoute
+  '/resources/$id/edit': typeof ResourcesIdEditRoute
+  '/experiences/$id': typeof ExperiencesIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/companies': typeof CompaniesRoute
+  '/dashboard': typeof DashboardRoute
+  '/search': typeof SearchRoute
+  '/experiences/new': typeof ExperiencesNewRoute
+  '/resources/new': typeof ResourcesNewRoute
+  '/experiences/': typeof ExperiencesIndexRoute
+  '/resources/': typeof ResourcesIndexRoute
+  '/experiences/$id/edit': typeof ExperiencesIdEditRoute
+  '/resources/$id/edit': typeof ResourcesIdEditRoute
+  '/experiences/$id/': typeof ExperiencesIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/companies'
+    | '/dashboard'
+    | '/search'
+    | '/experiences/new'
+    | '/resources/new'
+    | '/experiences/'
+    | '/resources/'
+    | '/experiences/$id/edit'
+    | '/resources/$id/edit'
+    | '/experiences/$id/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/companies'
+    | '/dashboard'
+    | '/search'
+    | '/experiences/new'
+    | '/resources/new'
+    | '/experiences'
+    | '/resources'
+    | '/experiences/$id/edit'
+    | '/resources/$id/edit'
+    | '/experiences/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/companies'
+    | '/dashboard'
+    | '/search'
+    | '/experiences/new'
+    | '/resources/new'
+    | '/experiences/'
+    | '/resources/'
+    | '/experiences/$id/edit'
+    | '/resources/$id/edit'
+    | '/experiences/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CompaniesRoute: typeof CompaniesRoute
+  DashboardRoute: typeof DashboardRoute
+  SearchRoute: typeof SearchRoute
+  ExperiencesNewRoute: typeof ExperiencesNewRoute
+  ResourcesNewRoute: typeof ResourcesNewRoute
+  ExperiencesIndexRoute: typeof ExperiencesIndexRoute
+  ResourcesIndexRoute: typeof ResourcesIndexRoute
+  ExperiencesIdEditRoute: typeof ExperiencesIdEditRoute
+  ResourcesIdEditRoute: typeof ResourcesIdEditRoute
+  ExperiencesIdIndexRoute: typeof ExperiencesIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +182,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/companies': {
+      id: '/companies'
+      path: '/companies'
+      fullPath: '/companies'
+      preLoaderRoute: typeof CompaniesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/experiences/': {
+      id: '/experiences/'
+      path: '/experiences'
+      fullPath: '/experiences/'
+      preLoaderRoute: typeof ExperiencesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/experiences/new': {
+      id: '/experiences/new'
+      path: '/experiences/new'
+      fullPath: '/experiences/new'
+      preLoaderRoute: typeof ExperiencesNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources/': {
+      id: '/resources/'
+      path: '/resources'
+      fullPath: '/resources/'
+      preLoaderRoute: typeof ResourcesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources/new': {
+      id: '/resources/new'
+      path: '/resources/new'
+      fullPath: '/resources/new'
+      preLoaderRoute: typeof ResourcesNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/experiences/$id/': {
+      id: '/experiences/$id/'
+      path: '/experiences/$id'
+      fullPath: '/experiences/$id/'
+      preLoaderRoute: typeof ExperiencesIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/experiences/$id/edit': {
+      id: '/experiences/$id/edit'
+      path: '/experiences/$id/edit'
+      fullPath: '/experiences/$id/edit'
+      preLoaderRoute: typeof ExperiencesIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources/$id/edit': {
+      id: '/resources/$id/edit'
+      path: '/resources/$id/edit'
+      fullPath: '/resources/$id/edit'
+      preLoaderRoute: typeof ResourcesIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CompaniesRoute: CompaniesRoute,
+  DashboardRoute: DashboardRoute,
+  SearchRoute: SearchRoute,
+  ExperiencesNewRoute: ExperiencesNewRoute,
+  ResourcesNewRoute: ResourcesNewRoute,
+  ExperiencesIndexRoute: ExperiencesIndexRoute,
+  ResourcesIndexRoute: ResourcesIndexRoute,
+  ExperiencesIdEditRoute: ExperiencesIdEditRoute,
+  ResourcesIdEditRoute: ResourcesIdEditRoute,
+  ExperiencesIdIndexRoute: ExperiencesIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
