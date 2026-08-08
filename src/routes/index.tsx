@@ -70,7 +70,7 @@ function ExperiencePreview({ exp }: { exp: Experience }) {
     <Link
       to="/experiences/$id"
       params={{ id: exp.id }}
-      className="group surface-card hover-lift block overflow-hidden p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+      className="group surface-card block overflow-hidden p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
@@ -125,18 +125,19 @@ function Home() {
 
   const companyStats = useMemo(
     () =>
-      (companies.data ?? []).map((c) => ({
-        ...c,
-        experiences: (experiences.data ?? []).filter(
-          (e) =>
-            e.company.toLowerCase() === c.company_name.toLowerCase(),
+      (companies.data ?? []).map((company) => ({
+        ...company,
+        experienceCount: (experiences.data ?? []).filter(
+          (experience) =>
+            experience.company.toLowerCase() ===
+            company.company_name.toLowerCase(),
         ).length,
       })),
     [companies.data, experiences.data],
   );
 
   const topCompanies = [...companyStats]
-    .sort((a, b) => b.experiences - a.experiences)
+    .sort((a, b) => b.experienceCount - a.experienceCount)
     .slice(0, 6);
 
   /* ------------------------------------------------------------------------ */
@@ -146,7 +147,9 @@ function Home() {
   const searchSuggestions = useMemo(() => {
     const query = term.trim().toLowerCase();
 
-    if (!query) return [];
+    if (!query) {
+      return [];
+    }
 
     const suggestions: string[] = [];
 
@@ -159,19 +162,19 @@ function Home() {
       }
     }
 
-    for (const exp of experiences.data ?? []) {
+    for (const experience of experiences.data ?? []) {
       if (
-        exp.role.toLowerCase().includes(query) &&
-        !suggestions.includes(exp.role)
+        experience.role.toLowerCase().includes(query) &&
+        !suggestions.includes(experience.role)
       ) {
-        suggestions.push(exp.role);
+        suggestions.push(experience.role);
       }
 
       if (
-        exp.company.toLowerCase().includes(query) &&
-        !suggestions.includes(exp.company)
+        experience.company.toLowerCase().includes(query) &&
+        !suggestions.includes(experience.company)
       ) {
-        suggestions.push(exp.company);
+        suggestions.push(experience.company);
       }
     }
 
@@ -208,13 +211,12 @@ function Home() {
   };
 
   /* ------------------------------------------------------------------------ */
-  /* Loading                                                                  */
+  /* Stats                                                                    */
   /* ------------------------------------------------------------------------ */
 
-  const isLoading =
-    companies.isLoading ||
-    experiences.isLoading ||
-    resources.isLoading;
+  const contributorCount = new Set(
+    (experiences.data ?? []).map((experience) => experience.student_name),
+  ).size;
 
   return (
     <>
@@ -223,7 +225,6 @@ function Home() {
       {/* ================================================================== */}
 
       <section className="gradient-hero relative overflow-hidden">
-        {/* Decorative background elements */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -top-24 -right-24 size-72 rounded-full bg-white/10 blur-3xl"
@@ -244,9 +245,7 @@ function Home() {
             {/* Badge */}
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-2 text-xs font-semibold shadow-sm backdrop-blur-md transition-transform duration-300 hover:scale-105">
               <Sparkles className="size-3.5" />
-
               <span>Prepare smarter. Get placed faster.</span>
-
               <Zap className="size-3.5" />
             </div>
 
@@ -267,14 +266,11 @@ function Home() {
               prepare faster.
             </p>
 
-            {/* ============================================================ */}
-            {/* SEARCH                                                         */}
-            {/* ============================================================ */}
-
+            {/* Search */}
             <form
               className="relative mt-8 w-full max-w-2xl"
-              onSubmit={(e) => {
-                e.preventDefault();
+              onSubmit={(event) => {
+                event.preventDefault();
                 performSearch();
               }}
             >
@@ -284,8 +280,8 @@ function Home() {
 
                   <Input
                     value={term}
-                    onChange={(e) => {
-                      setTerm(e.target.value);
+                    onChange={(event) => {
+                      setTerm(event.target.value);
                       setShowSuggestions(true);
                     }}
                     onFocus={() => setShowSuggestions(true)}
@@ -308,7 +304,6 @@ function Home() {
                     </button>
                   )}
 
-                  {/* Search suggestions */}
                   {showSuggestions &&
                     term.trim() &&
                     searchSuggestions.length > 0 && (
@@ -353,22 +348,18 @@ function Home() {
               </div>
 
               <div className="flex flex-wrap gap-2">
-                {[
-                  "Google",
-                  "Amazon",
-                  "Microsoft",
-                  "DSA",
-                  "Aptitude",
-                ].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => handlePopularSearch(item)}
-                    className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/90 backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/20"
-                  >
-                    {item}
-                  </button>
-                ))}
+                {["Google", "Amazon", "Microsoft", "DSA", "Aptitude"].map(
+                  (item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      onClick={() => handlePopularSearch(item)}
+                      className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/90 backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/20"
+                    >
+                      {item}
+                    </button>
+                  ),
+                )}
               </div>
             </div>
 
@@ -392,13 +383,11 @@ function Home() {
                 variant="outline"
                 className="border-white/40 bg-transparent text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/15 hover:text-primary-foreground"
               >
-                <Link to="/experiences/new">
-                  Share your experience
-                </Link>
+                <Link to="/experiences/new">Share your experience</Link>
               </Button>
             </div>
 
-            {/* Small trust line */}
+            {/* Trust line */}
             <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/60">
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="size-3.5" />
@@ -452,13 +441,7 @@ function Home() {
           <div className="transition-transform duration-300 hover:-translate-y-1">
             <StatCard
               label="Contributors"
-              value={
-                new Set(
-                  (experiences.data ?? []).map(
-                    (e) => e.student_name,
-                  ),
-                ).size
-              }
+              value={contributorCount}
               icon={Users}
             />
           </div>
@@ -543,4 +526,12 @@ function Home() {
             <div className="absolute -top-8 -right-8 size-24 rounded-full bg-primary/5 transition-transform duration-500 group-hover:scale-150" />
 
             <div className="relative">
-              <div className="mb-4 flex
+              <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110">
+                <Building2 className="size-5" />
+              </div>
+
+              <h3 className="font-bold">Company Insights</h3>
+
+              <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                Explore companies, roles and placement information.
+  
