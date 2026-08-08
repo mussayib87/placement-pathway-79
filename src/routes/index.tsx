@@ -40,8 +40,7 @@ export const Route = createFileRoute("/")({
  {
  name: "description",
  content:
- "Stop hunting through WhatsApp groups. Search interview experiences, company insights and curated placement resources shared by 
-students.",
+ "Stop hunting through WhatsApp groups. Search interview experiences, company insights and curated placement resources shared by students.",
  },
  {
  property: "og:title",
