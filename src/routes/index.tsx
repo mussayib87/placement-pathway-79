@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+          import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
@@ -86,6 +86,7 @@ function Home() {
       (e) => e.company.toLowerCase() === c.company_name.toLowerCase(),
     ).length,
   }));
+
   const topCompanies = [...companyStats]
     .sort((a, b) => b.experiences - a.experiences)
     .slice(0, 6);
@@ -97,13 +98,15 @@ function Home() {
           <div className="max-w-3xl text-primary-foreground">
             <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-xs font-semibold backdrop-blur">
               <Sparkles className="size-3.5" />
-              Built by students, for students
+              Prepare smarter. Get placed faster.
             </span>
+
             <h1 className="mt-6 text-4xl leading-[1.08] font-extrabold sm:text-5xl lg:text-6xl">
               Every placement resource,
               <br />
               in one searchable hub.
             </h1>
+
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
               Interview experiences, coding sheets, aptitude material and senior
               notes are scattered across WhatsApp, Telegram and Drive links. This
@@ -120,6 +123,7 @@ function Home() {
             >
               <div className="relative flex-1">
                 <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+
                 <Input
                   value={term}
                   onChange={(e) => setTerm(e.target.value)}
@@ -128,7 +132,13 @@ function Home() {
                   aria-label="Search the hub"
                 />
               </div>
-              <Button type="submit" size="lg" variant="secondary" className="h-12">
+
+              <Button
+                type="submit"
+                size="lg"
+                variant="secondary"
+                className="h-12"
+              >
                 Search
               </Button>
             </form>
@@ -137,6 +147,7 @@ function Home() {
               <Button asChild size="lg" variant="secondary">
                 <Link to="/experiences">Browse experiences</Link>
               </Button>
+
               <Button
                 asChild
                 size="lg"
@@ -157,20 +168,25 @@ function Home() {
             value={companies.data?.length ?? 0}
             icon={Building2}
           />
+
           <StatCard
             label="Experiences"
             value={experiences.data?.length ?? 0}
             icon={MessagesSquare}
           />
+
           <StatCard
             label="Resources"
             value={resources.data?.length ?? 0}
             icon={BookOpen}
           />
+
           <StatCard
             label="Contributors"
             value={
-              new Set((experiences.data ?? []).map((e) => e.student_name)).size
+              new Set(
+                (experiences.data ?? []).map((e) => e.student_name),
+              ).size
             }
             icon={Users}
           />
@@ -183,10 +199,12 @@ function Home() {
             <h2 className="text-2xl font-extrabold">
               Latest interview experiences
             </h2>
+
             <p className="mt-1.5 text-sm text-muted-foreground">
               Fresh, first-hand accounts from recent drives.
             </p>
           </div>
+
           <Button asChild variant="ghost" className="hidden sm:inline-flex">
             <Link to="/experiences">
               View all <ArrowRight className="ml-1 size-4" />
@@ -210,9 +228,11 @@ function Home() {
       <section className="bg-card py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <h2 className="text-2xl font-extrabold">Popular companies</h2>
+
           <p className="mt-1.5 text-sm text-muted-foreground">
             Where students in this hub interviewed the most.
           </p>
+
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {topCompanies.map((c) => (
               <Link
@@ -224,6 +244,7 @@ function Home() {
                   <p className="font-bold">{c.company_name}</p>
                   <p className="text-sm text-muted-foreground">{c.role}</p>
                 </div>
+
                 <Chip>{c.experiences} experiences</Chip>
               </Link>
             ))}
@@ -235,10 +256,12 @@ function Home() {
         <div className="flex items-end justify-between gap-4">
           <div>
             <h2 className="text-2xl font-extrabold">Recent resources</h2>
+
             <p className="mt-1.5 text-sm text-muted-foreground">
               Sheets, notes and links curated by the community.
             </p>
           </div>
+
           <Button asChild variant="ghost" className="hidden sm:inline-flex">
             <Link to="/resources">
               View all <ArrowRight className="ml-1 size-4" />
@@ -263,10 +286,13 @@ function Home() {
                     <Chip>{r.category}</Chip>
                     <Chip>{r.type}</Chip>
                   </div>
+
                   <h3 className="mt-3 font-bold">{r.title}</h3>
+
                   <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
                     {r.description}
                   </p>
+
                   <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-primary">
                     Open resource <ExternalLink className="size-3.5" />
                   </span>
@@ -278,4 +304,4 @@ function Home() {
       </section>
     </>
   );
-}
+        }  
