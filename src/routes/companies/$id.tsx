@@ -1,9 +1,25 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, Building2, ExternalLink, MessageSquare } from "lucide-react";
-import { companiesQuery, experiencesQuery, resourcesQuery } from "@/lib/api";
+import {
+  ArrowLeft,
+  Building2,
+  ExternalLink,
+  MessageSquare,
+} from "lucide-react";
+
+import {
+  companiesQuery,
+  experiencesQuery,
+  resourcesQuery,
+} from "@/lib/api";
+
 import { Button } from "@/components/ui/button";
-import { Chip, DifficultyBadge, EmptyState } from "@/components/ui-kit";
+
+import {
+  Chip,
+  DifficultyBadge,
+  EmptyState,
+} from "@/components/ui-kit";
 
 export const Route = createFileRoute("/companies/$id")({
   component: CompanyDetailsPage,
@@ -23,7 +39,9 @@ function CompanyDetailsPage() {
   if (companies.isLoading) {
     return (
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-        <p className="text-muted-foreground">Loading company...</p>
+        <p className="text-muted-foreground">
+          Loading company...
+        </p>
       </div>
     );
   }
@@ -36,6 +54,7 @@ function CompanyDetailsPage() {
           title="Company not found"
           description="The company you are looking for does not exist."
         />
+
         <div className="mt-6">
           <Button asChild>
             <Link to="/companies">
@@ -50,7 +69,8 @@ function CompanyDetailsPage() {
 
   const companyExperiences = (experiences.data ?? []).filter(
     (e) =>
-      e.company.toLowerCase() === company.company_name.toLowerCase(),
+      e.company.toLowerCase() ===
+      company.company_name.toLowerCase(),
   );
 
   const companyResources = (resources.data ?? []).filter(
@@ -61,6 +81,7 @@ function CompanyDetailsPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+
       <Button asChild variant="outline" className="mb-6">
         <Link to="/companies">
           <ArrowLeft className="mr-2 size-4" />
@@ -68,8 +89,10 @@ function CompanyDetailsPage() {
         </Link>
       </Button>
 
+      {/* Company information */}
       <div className="surface-card p-6 sm:p-8">
         <div className="flex items-start gap-4">
+
           <div className="grid size-14 place-items-center rounded-2xl bg-accent text-accent-foreground">
             <Building2 className="size-7" />
           </div>
@@ -78,23 +101,33 @@ function CompanyDetailsPage() {
             <h1 className="text-3xl font-extrabold tracking-tight">
               {company.company_name}
             </h1>
+
             <p className="mt-1 text-muted-foreground">
               {company.role}
             </p>
           </div>
+
         </div>
 
         <div className="mt-6 flex flex-wrap gap-2">
-          <Chip>{companyExperiences.length} experiences</Chip>
-          <Chip>{companyResources.length} resources</Chip>
+          <Chip>
+            {companyExperiences.length} experiences
+          </Chip>
+
+          <Chip>
+            {companyResources.length} resources
+          </Chip>
         </div>
       </div>
 
+      {/* Interview Experiences */}
       <section className="mt-10">
+
         <div className="mb-5">
           <h2 className="text-2xl font-extrabold">
             Interview Experiences
           </h2>
+
           <p className="mt-1 text-sm text-muted-foreground">
             Experiences shared by students who interviewed at{" "}
             {company.company_name}.
@@ -109,6 +142,7 @@ function CompanyDetailsPage() {
           />
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
             {companyExperiences.map((exp) => (
               <Link
                 key={exp.id}
@@ -116,36 +150,56 @@ function CompanyDetailsPage() {
                 params={{ id: exp.id }}
                 className="surface-card hover-lift block p-5"
               >
+
                 <div className="flex items-start justify-between gap-3">
+
                   <div>
-                    <h3 className="font-bold">{exp.role}</h3>
+                    <h3 className="font-bold">
+                      {exp.role}
+                    </h3>
+
                     <p className="mt-1 text-sm text-muted-foreground">
                       {exp.student_name}
                     </p>
                   </div>
 
                   <DifficultyBadge value={exp.difficulty} />
+
                 </div>
 
                 <p className="mt-4 line-clamp-3 text-sm text-muted-foreground">
                   {exp.summary}
                 </p>
+
               </Link>
             ))}
+
           </div>
         )}
+
       </section>
 
+      {/* Resources */}
       <section className="mt-10">
+
         <div className="mb-5">
           <h2 className="text-2xl font-extrabold">
             Resources
           </h2>
+
           <p className="mt-1 text-sm text-muted-foreground">
-            Placement resources related to {company.company_name}.
-            </p>
+            Placement resources related to{" "}
+            {company.company_name}.
+          </p>
+        </div>
+
+        {companyResources.length === 0 ? (
+          <p className="text-sm text-muted-foreground">
+            No resources available for this company.
+          </p>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
             {companyResources.map((resource) => (
               <a
                 key={resource.id}
@@ -154,6 +208,7 @@ function CompanyDetailsPage() {
                 rel="noreferrer noopener"
                 className="surface-card hover-lift block p-5"
               >
+
                 <div className="flex gap-2">
                   <Chip>{resource.category}</Chip>
                   <Chip>{resource.type}</Chip>
@@ -171,11 +226,15 @@ function CompanyDetailsPage() {
                   Open resource
                   <ExternalLink className="size-3.5" />
                 </span>
+
               </a>
             ))}
+
           </div>
         )}
+
       </section>
+
     </div>
   );
-                  }
+      }
