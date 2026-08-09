@@ -116,7 +116,7 @@ export const experiencesApi = {
     unwrap<Experience>(
       await supabase
         .from("interview_experiences")
-        .insert(payload as never)
+        .insert({ ...payload, user_id: await currentUserId() } as never)
         .select()
         .single(),
     ),
@@ -155,7 +155,7 @@ export const resourcesApi = {
     unwrap<Resource>(
       await supabase
         .from("resources")
-        .insert(payload as never)
+        .insert({ ...payload, user_id: await currentUserId() } as never)
         .select()
         .single(),
     ),
