@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CompaniesRouteImport } from './routes/companies'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as NotesRouteImport } from './routes/notes'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as CompaniesIdRouteImport } from './routes/companies/$id'
 import { Route as ExperiencesIndexRouteImport } from './routes/experiences.index'
 import { Route as ExperiencesNewRouteImport } from './routes/experiences.new'
 import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
@@ -36,10 +38,20 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotesRoute = NotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
   getParentRoute: () => rootRouteImport,
+} as any)
+const CompaniesIdRoute = CompaniesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => CompaniesRoute,
 } as any)
 const ExperiencesIndexRoute = ExperiencesIndexRouteImport.update({
   id: '/experiences/',
@@ -79,9 +91,11 @@ const ResourcesIdEditRoute = ResourcesIdEditRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/companies': typeof CompaniesRoute
+  '/companies': typeof CompaniesRouteWithChildren
   '/dashboard': typeof DashboardRoute
+  '/notes': typeof NotesRoute
   '/search': typeof SearchRoute
+  '/companies/$id': typeof CompaniesIdRoute
   '/experiences/new': typeof ExperiencesNewRoute
   '/resources/new': typeof ResourcesNewRoute
   '/experiences/': typeof ExperiencesIndexRoute
@@ -92,9 +106,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/companies': typeof CompaniesRoute
+  '/companies': typeof CompaniesRouteWithChildren
   '/dashboard': typeof DashboardRoute
+  '/notes': typeof NotesRoute
   '/search': typeof SearchRoute
+  '/companies/$id': typeof CompaniesIdRoute
   '/experiences/new': typeof ExperiencesNewRoute
   '/resources/new': typeof ResourcesNewRoute
   '/experiences': typeof ExperiencesIndexRoute
@@ -106,9 +122,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/companies': typeof CompaniesRoute
+  '/companies': typeof CompaniesRouteWithChildren
   '/dashboard': typeof DashboardRoute
+  '/notes': typeof NotesRoute
   '/search': typeof SearchRoute
+  '/companies/$id': typeof CompaniesIdRoute
   '/experiences/new': typeof ExperiencesNewRoute
   '/resources/new': typeof ResourcesNewRoute
   '/experiences/': typeof ExperiencesIndexRoute
@@ -123,7 +141,9 @@ export interface FileRouteTypes {
     | '/'
     | '/companies'
     | '/dashboard'
+    | '/notes'
     | '/search'
+    | '/companies/$id'
     | '/experiences/new'
     | '/resources/new'
     | '/experiences/'
@@ -136,7 +156,9 @@ export interface FileRouteTypes {
     | '/'
     | '/companies'
     | '/dashboard'
+    | '/notes'
     | '/search'
+    | '/companies/$id'
     | '/experiences/new'
     | '/resources/new'
     | '/experiences'
@@ -149,7 +171,9 @@ export interface FileRouteTypes {
     | '/'
     | '/companies'
     | '/dashboard'
+    | '/notes'
     | '/search'
+    | '/companies/$id'
     | '/experiences/new'
     | '/resources/new'
     | '/experiences/'
@@ -161,8 +185,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CompaniesRoute: typeof CompaniesRoute
+  CompaniesRoute: typeof CompaniesRouteWithChildren
   DashboardRoute: typeof DashboardRoute
+  NotesRoute: typeof NotesRoute
   SearchRoute: typeof SearchRoute
   ExperiencesNewRoute: typeof ExperiencesNewRoute
   ResourcesNewRoute: typeof ResourcesNewRoute
@@ -196,12 +221,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/notes': {
+      id: '/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof NotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/search': {
       id: '/search'
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/companies/$id': {
+      id: '/companies/$id'
+      path: '/$id'
+      fullPath: '/companies/$id'
+      preLoaderRoute: typeof CompaniesIdRouteImport
+      parentRoute: typeof CompaniesRoute
     }
     '/experiences/': {
       id: '/experiences/'
@@ -255,10 +294,23 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface CompaniesRouteChildren {
+  CompaniesIdRoute: typeof CompaniesIdRoute
+}
+
+const CompaniesRouteChildren: CompaniesRouteChildren = {
+  CompaniesIdRoute: CompaniesIdRoute,
+}
+
+const CompaniesRouteWithChildren = CompaniesRoute._addFileChildren(
+  CompaniesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CompaniesRoute: CompaniesRoute,
+  CompaniesRoute: CompaniesRouteWithChildren,
   DashboardRoute: DashboardRoute,
+  NotesRoute: NotesRoute,
   SearchRoute: SearchRoute,
   ExperiencesNewRoute: ExperiencesNewRoute,
   ResourcesNewRoute: ResourcesNewRoute,
@@ -271,3 +323,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
