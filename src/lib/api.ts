@@ -74,7 +74,11 @@ export const companiesApi = {
     ),
   create: async (payload: Pick<Company, "company_name" | "role">) =>
     unwrap<Company>(
-      await supabase.from("companies").insert(payload).select().single(),
+      await supabase
+        .from("companies")
+        .insert({ ...payload, user_id: await currentUserId() })
+        .select()
+        .single(),
     ),
   update: async (id: string, payload: Partial<Company>) =>
     unwrap<Company>(
