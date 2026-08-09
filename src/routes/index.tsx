@@ -404,126 +404,142 @@ function Home() {
       {/* ===================================================
           HERO
       =================================================== */}
+<section className="gradient-hero relative overflow-hidden">
+  <div
+    aria-hidden="true"
+    className="pointer-events-none absolute -top-24 -right-24 size-72 rounded-full bg-white/10 blur-3xl"
+  />
 
-      <section className="gradient-hero relative overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-24 -right-24 size-72 rounded-full bg-white/10 blur-3xl"
-        />
+  <div
+    aria-hidden="true"
+    className="pointer-events-none absolute -bottom-32 -left-24 size-80 rounded-full bg-white/10 blur-3xl"
+  />
 
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-32 -left-24 size-80 rounded-full bg-white/10 blur-3xl"
-        />
+  <div
+    aria-hidden="true"
+    className="pointer-events-none absolute top-1/2 right-1/4 size-40 -translate-y-1/2 rounded-full bg-white/5 blur-2xl"
+  />
 
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 right-1/4 size-40 -translate-y-1/2 rounded-full bg-white/5 blur-2xl"
-        />
+  <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
+    <div className="max-w-4xl text-primary-foreground">
 
-        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
-          <div className="max-w-4xl text-primary-foreground">
+      <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-2 text-xs font-semibold shadow-sm backdrop-blur-md transition-transform duration-300 hover:scale-105">
+        <Sparkles className="size-3.5" />
 
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-2 text-xs font-semibold shadow-sm backdrop-blur-md transition-transform duration-300 hover:scale-105">
-              <Sparkles className="size-3.5" />
+        <span>
+          Student-powered placement preparation
+        </span>
 
-              <span>
-                Student-powered placement preparation
-              </span>
+        <Zap className="size-3.5" />
+      </div>
 
-              <Zap className="size-3.5" />
-            </div>
+      <h1 className="text-4xl leading-[1.06] font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+        Prepare for the company
+        <br className="hidden sm:block" />
 
-            <h1 className="text-4xl leading-[1.06] font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-              Prepare for the company
-              <br className="hidden sm:block" />
+        <span className="text-white/75">
+          {" "}you want to join.
+        </span>
+      </h1>
 
-              <span className="text-white/75">
-                {" "}you want to join.
-              </span>
-            </h1>
+      <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">
+        Find real interview experiences, company insights,
+        coding sheets and placement resources — all in one
+        searchable hub.
+      </p>
 
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">
-              Find real interview experiences, company insights,
-              coding sheets and placement resources — all in one
-              searchable hub.
-            </p>
+      {/* SEARCH */}
 
-            {/* SEARCH */}
+      <form
+        className="relative mt-8 w-full max-w-2xl"
+        onSubmit={(event) => {
+          event.preventDefault();
+          performSearch();
+        }}
+      >
+        <div className="flex w-full flex-col gap-3 sm:flex-row">
+          <div className="relative flex-1">
+            <Search className="pointer-events-none absolute top-1/2 left-4 z-10 size-4 -translate-y-1/2 text-muted-foreground" />
 
-            <form
-              className="relative mt-8 w-full max-w-2xl"
-              onSubmit={(event) => {
-                event.preventDefault();
-                performSearch();
+            <Input
+              value={term}
+              onChange={(event) => {
+                setTerm(event.target.value);
+                setShowSuggestions(true);
               }}
-            >
-              <div className="flex w-full flex-col gap-3 sm:flex-row">
-                <div className="relative flex-1">
-                  <Search className="pointer-events-none absolute top-1/2 left-4 z-10 size-4 -translate-y-1/2 text-muted-foreground" />
+              onFocus={() => setShowSuggestions(true)}
+              placeholder="Search company, role, question or resource..."
+              className="h-13 border-0 bg-card pl-11 pr-10 text-foreground shadow-xl ring-1 ring-black/5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary"
+              aria-label="Search the hub"
+            />
 
-                  <Input
-                    value={term}
-                    onChange={(event) => {
-                      setTerm(event.target.value);
-                      setShowSuggestions(true);
-                    }}
-                    onFocus={() => setShowSuggestions(true)}
-                    placeholder="Search company, role, question or resource..."
-                    className="h-13 border-0 bg-card pl-11 pr-10 text-foreground shadow-xl ring-1 ring-black/5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary"
-                    aria-label="Search the hub"
-                  />
+            {term && (
+              <button
+                type="button"
+                onClick={() => {
+                  setTerm("");
+                  setShowSuggestions(false);
+                }}
+                className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                aria-label="Clear search"
+              >
+                <X className="size-4" />
+              </button>
+            )}
 
-                  {term && (
+            {showSuggestions &&
+              term.trim() &&
+              searchSuggestions.length > 0 && (
+                <div className="absolute top-full right-0 left-0 z-50 mt-2 overflow-hidden rounded-xl border border-border bg-card p-1.5 text-foreground shadow-2xl">
+                  {searchSuggestions.map((suggestion) => (
                     <button
+                      key={suggestion}
                       type="button"
                       onClick={() => {
-                        setTerm("");
-                        setShowSuggestions(false);
+                        setTerm(suggestion);
+                        performSearch(suggestion);
                       }}
-                      className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                      aria-label="Clear search"
+                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-accent"
                     >
-                      <X className="size-4" />
+                      <Search className="size-4 text-muted-foreground" />
+
+                      <span className="truncate font-medium">
+                        {suggestion}
+                      </span>
                     </button>
-                  )}
-
-                  {showSuggestions &&
-                    term.trim() &&
-                    searchSuggestions.length > 0 && (
-                      <div className="absolute top-full right-0 left-0 z-50 mt-2 overflow-hidden rounded-xl border border-border bg-card p-1.5 text-foreground shadow-2xl">
-                        {searchSuggestions.map((suggestion) => (
-                          <button
-                            key={suggestion}
-                            type="button"
-                            onClick={() => {
-                              setTerm(suggestion);
-                              performSearch(suggestion);
-                            }}
-                            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-accent"
-                          >
-                            <Search className="size-4 text-muted-foreground" />
-
-                            <span className="truncate font-medium">
-                              {suggestion}
-                            </span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                  ))}
                 </div>
+              )}
+          </div>
 
-                <Button
-                  type="submit"
-                  size="lg"
-                  variant="secondary"
-                  className="h-13 px-7 shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl"
-                >
-                  <Search className="mr-2 size-4" />
-                  Search
-                </Button>
-              </div>
-            </form>
+          <Button
+            type="submit"
+            size="lg"
+            variant="secondary"
+            className="h-13 px-7 shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl"
+          >
+            <Search className="mr-2 size-4" />
+            Search
+          </Button>
+        </div>
+      </form>
+
+      {/* ENGINEERING NOTES */}
+
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Button
+          asChild
+          size="lg"
+          variant="secondary"
+          className="transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+        >
+          <Link to="/notes">
+            <BookOpen className="mr-2 size-4" />
+            Engineering Notes
+            <ArrowRight className="ml-1 size-4" />
+          </Link>
+        </Button>
+      </div>
 
             {/* POPULAR SEARCHES */}
 
