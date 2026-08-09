@@ -406,9 +406,9 @@ function Home() {
       {/* ===================================================
           HERO
       =================================================== */}
-          <section className="gradient-hero relative isolate overflow-hidden">
+          <section className="relative">
   <HeroFuturistic />
-
+            
   <div
     aria-hidden="true"
     className="pointer-events-none absolute inset-0 z-10 bg-black/25"
