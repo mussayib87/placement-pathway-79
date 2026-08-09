@@ -1,5 +1,6 @@
 import { useState } from "react";
 import notesData from "./notesData";
+import "./Notes.css";
 
 export default function Notes() {
   const [year, setYear] = useState("");
