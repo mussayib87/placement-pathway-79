@@ -134,14 +134,30 @@ export function Navbar() {
               </Link>
             ))}
 
-            <Button asChild className="mt-2 w-full">
-              <Link
-                to="/experiences/new"
-                onClick={() => setOpen(false)}
-              >
-                Share Experience
-              </Link>
-            </Button>
+            {user ? (
+              <>
+                <Button asChild className="mt-2 w-full">
+                  <Link to="/experiences/new" onClick={() => setOpen(false)}>
+                    Share Experience
+                  </Link>
+                </Button>
+
+                <Button
+                  variant="outline"
+                  className="mt-2 w-full"
+                  onClick={handleSignOut}
+                >
+                  Sign out
+                </Button>
+              </>
+            ) : (
+              <Button asChild className="mt-2 w-full">
+                <Link to="/auth" onClick={() => setOpen(false)}>
+                  Sign in
+                </Link>
+              </Button>
+            )}
+
           </div>
         </div>
       )}
