@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+          import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   BookOpen,
@@ -19,6 +19,7 @@ const links = [
   { to: "/companies", label: "Companies", icon: Building2 },
   { to: "/experiences", label: "Experiences", icon: MessagesSquare },
   { to: "/resources", label: "Resources", icon: BookOpen },
+  { to: "/notes", label: "Notes", icon: BookOpen },
   { to: "/search", label: "Search", icon: Search },
 ] as const;
 
@@ -32,6 +33,7 @@ export function Navbar() {
           <span className="grid size-9 place-items-center rounded-xl bg-primary text-primary-foreground shadow-soft">
             <GraduationCap className="size-5" />
           </span>
+
           <span className="font-display text-[15px] leading-tight font-extrabold tracking-tight">
             Placement
             <span className="block text-[11px] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
@@ -45,7 +47,9 @@ export function Navbar() {
             <Link
               key={l.to}
               to={l.to}
-              activeOptions={{ exact: "exact" in l ? l.exact : false }}
+              activeOptions={{
+                exact: "exact" in l ? l.exact : false,
+              }}
               className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
             >
               {l.label}
@@ -55,9 +59,13 @@ export function Navbar() {
 
         <div className="flex items-center gap-1.5">
           <ThemeToggle />
+
           <Button asChild size="sm" className="hidden sm:inline-flex">
-            <Link to="/experiences/new">Share Experience</Link>
+            <Link to="/experiences/new">
+              Share Experience
+            </Link>
           </Button>
+
           <Button
             variant="ghost"
             size="icon"
@@ -65,7 +73,11 @@ export function Navbar() {
             aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            {open ? (
+              <X className="size-5" />
+            ) : (
+              <Menu className="size-5" />
+            )}
           </Button>
         </div>
       </nav>
@@ -78,15 +90,21 @@ export function Navbar() {
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                activeOptions={{ exact: "exact" in l ? l.exact : false }}
+                activeOptions={{
+                  exact: "exact" in l ? l.exact : false,
+                }}
                 className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
               >
                 <l.icon className="size-4" />
                 {l.label}
               </Link>
             ))}
+
             <Button asChild className="mt-2 w-full">
-              <Link to="/experiences/new" onClick={() => setOpen(false)}>
+              <Link
+                to="/experiences/new"
+                onClick={() => setOpen(false)}
+              >
                 Share Experience
               </Link>
             </Button>
@@ -94,5 +112,6 @@ export function Navbar() {
         </div>
       )}
     </header>
-  );
-}
+    );
+            }
+      }
