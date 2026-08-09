@@ -16,11 +16,11 @@ export default function Notes() {
         .from("notes")
         .select("*")
         .order("id", { ascending: true });
-
-      if (error) {
-        console.error("Error loading notes:", error);
-        setError("Unable to load notes.");
-      } else {
+if (error) {
+  console.error("Error loading notes:", error);
+  setError(`Supabase error: ${error.message}`);
+}
+       else {
         setNotes(data || []);
       }
 
