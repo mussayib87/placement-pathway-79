@@ -59,6 +59,13 @@ function unwrap<T>({ data, error }: { data: T | null; error: unknown }): T {
   return data as T;
 }
 
+/** Current user id, used to stamp ownership on new rows (required by RLS). */
+export async function currentUserId(): Promise<string> {
+  const { data } = await supabase.auth.getUser();
+  if (!data.user) throw new Error("Please sign in to continue.");
+  return data.user.id;
+}
+
 /* ---------------- Companies ---------------- */
 export const companiesApi = {
   list: async () =>
@@ -67,7 +74,11 @@ export const companiesApi = {
     ),
   create: async (payload: Pick<Company, "company_name" | "role">) =>
     unwrap<Company>(
-      await supabase.from("companies").insert(payload).select().single(),
+      await supabase
+        .from("companies")
+        .insert({ ...payload, user_id: await currentUserId() })
+        .select()
+        .single(),
     ),
   update: async (id: string, payload: Partial<Company>) =>
     unwrap<Company>(
@@ -105,7 +116,7 @@ export const experiencesApi = {
     unwrap<Experience>(
       await supabase
         .from("interview_experiences")
-        .insert(payload as never)
+        .insert({ ...payload, user_id: await currentUserId() } as never)
         .select()
         .single(),
     ),
@@ -144,7 +155,7 @@ export const resourcesApi = {
     unwrap<Resource>(
       await supabase
         .from("resources")
-        .insert(payload as never)
+        .insert({ ...payload, user_id: await currentUserId() } as never)
         .select()
         .single(),
     ),
