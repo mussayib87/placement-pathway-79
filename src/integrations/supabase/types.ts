@@ -20,18 +20,21 @@ export type Database = {
           created_at: string
           id: string
           role: string
+          user_id: string | null
         }
         Insert: {
           company_name: string
           created_at?: string
           id?: string
           role: string
+          user_id?: string | null
         }
         Update: {
           company_name?: string
           created_at?: string
           id?: string
           role?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -50,6 +53,7 @@ export type Database = {
           summary: string | null
           technical_questions: string | null
           tips: string | null
+          user_id: string | null
         }
         Insert: {
           coding_questions?: string | null
@@ -65,6 +69,7 @@ export type Database = {
           summary?: string | null
           technical_questions?: string | null
           tips?: string | null
+          user_id?: string | null
         }
         Update: {
           coding_questions?: string | null
@@ -80,6 +85,37 @@ export type Database = {
           summary?: string | null
           technical_questions?: string | null
           tips?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          college: string | null
+          created_at: string
+          display_name: string
+          graduation_year: number | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          college?: string | null
+          created_at?: string
+          display_name?: string
+          graduation_year?: number | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          college?: string | null
+          created_at?: string
+          display_name?: string
+          graduation_year?: number | null
+          id?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -93,6 +129,7 @@ export type Database = {
           link: string
           title: string
           type: string
+          user_id: string | null
         }
         Insert: {
           category: string
@@ -103,6 +140,7 @@ export type Database = {
           link: string
           title: string
           type?: string
+          user_id?: string | null
         }
         Update: {
           category?: string
@@ -113,6 +151,7 @@ export type Database = {
           link?: string
           title?: string
           type?: string
+          user_id?: string | null
         }
         Relationships: []
       }
