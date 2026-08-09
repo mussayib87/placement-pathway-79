@@ -56,7 +56,7 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link to="/search" className="hover:text-primary">
+              <Link to="/search" search={{ q: "" }} className="hover:text-primary">
                 Global Search
               </Link>
             </li>
