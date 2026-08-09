@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 
-import HeroFuturistic from "@/components/HeroFuturistic";
+
 import {
   ArrowRight,
   BookOpen,
@@ -407,7 +407,7 @@ function Home() {
           HERO
       =================================================== */}
           <section className="relative">
-  <HeroFuturistic />
+  
             
   <div
     aria-hidden="true"
