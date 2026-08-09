@@ -76,11 +76,29 @@ export function Navbar() {
         <div className="flex items-center gap-1.5">
           <ThemeToggle />
 
-          <Button asChild size="sm" className="hidden sm:inline-flex">
-            <Link to="/experiences/new">
-              Share Experience
-            </Link>
-          </Button>
+          {!loading &&
+            (user ? (
+              <>
+                <Button asChild size="sm" className="hidden sm:inline-flex">
+                  <Link to="/experiences/new">Share Experience</Link>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="hidden sm:inline-flex"
+                  onClick={handleSignOut}
+                >
+                  <LogOut className="mr-1.5 size-4" />
+                  Sign out
+                </Button>
+              </>
+            ) : (
+              <Button asChild size="sm" className="hidden sm:inline-flex">
+                <Link to="/auth">Sign in</Link>
+              </Button>
+            ))}
+
 
           <Button
             variant="ghost"
