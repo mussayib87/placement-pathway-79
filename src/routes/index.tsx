@@ -404,39 +404,41 @@ function Home() {
       {/* ===================================================
           HERO
       =================================================== */}
-<section className="gradient-hero relative overflow-hidden">
+          <section className="gradient-hero relative isolate overflow-hidden">
+  <HeroFuturistic />
+
   <div
     aria-hidden="true"
-    className="pointer-events-none absolute -top-24 -right-24 size-72 rounded-full bg-white/10 blur-3xl"
+    className="pointer-events-none absolute inset-0 z-10 bg-black/25"
   />
 
   <div
     aria-hidden="true"
-    className="pointer-events-none absolute -bottom-32 -left-24 size-80 rounded-full bg-white/10 blur-3xl"
+    className="pointer-events-none absolute -top-24 -right-24 z-10 size-72 rounded-full bg-white/10 blur-3xl"
   />
 
   <div
     aria-hidden="true"
-    className="pointer-events-none absolute top-1/2 right-1/4 size-40 -translate-y-1/2 rounded-full bg-white/5 blur-2xl"
+    className="pointer-events-none absolute -bottom-32 -left-24 z-10 size-80 rounded-full bg-white/10 blur-3xl"
   />
 
-  <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
+  <div
+    aria-hidden="true"
+    className="pointer-events-none absolute top-1/2 right-1/4 z-10 size-40 -translate-y-1/2 rounded-full bg-white/5 blur-2xl"
+  />
+
+  <div className="relative z-20 mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
     <div className="max-w-4xl text-primary-foreground">
 
       <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-2 text-xs font-semibold shadow-sm backdrop-blur-md transition-transform duration-300 hover:scale-105">
         <Sparkles className="size-3.5" />
-
-        <span>
-          Student-powered placement preparation
-        </span>
-
+        <span>Student-powered placement preparation</span>
         <Zap className="size-3.5" />
       </div>
 
       <h1 className="text-4xl leading-[1.06] font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
         Prepare for the company
         <br className="hidden sm:block" />
-
         <span className="text-white/75">
           {" "}you want to join.
         </span>
@@ -447,8 +449,6 @@ function Home() {
         coding sheets and placement resources — all in one
         searchable hub.
       </p>
-
-      {/* SEARCH */}
 
       <form
         className="relative mt-8 w-full max-w-2xl"
@@ -502,7 +502,6 @@ function Home() {
                       className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-accent"
                     >
                       <Search className="size-4 text-muted-foreground" />
-
                       <span className="truncate font-medium">
                         {suggestion}
                       </span>
@@ -524,8 +523,6 @@ function Home() {
         </div>
       </form>
 
-      {/* ENGINEERING NOTES */}
-
       <div className="mt-6 flex flex-wrap gap-3">
         <Button
           asChild
@@ -541,81 +538,77 @@ function Home() {
         </Button>
       </div>
 
-            {/* POPULAR SEARCHES */}
-
-            <div className="mt-5">
-              <div className="mb-2 text-xs font-semibold text-white/60">
-                Popular searches
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "Google",
-                  "Amazon",
-                  "Microsoft",
-                  "TCS",
-                  "DSA",
-                  "Aptitude",
-                ].map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => handlePopularSearch(item)}
-                    className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/90 backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/20"
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* CTA */}
-
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Button
-                asChild
-                size="lg"
-                variant="secondary"
-                className="transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
-              >
-                <Link to="/experiences">
-                  Browse experiences
-                  <ArrowRight className="ml-1 size-4" />
-                </Link>
-              </Button>
-
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-white/40 bg-transparent text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/15 hover:text-primary-foreground"
-              >
-                <Link to="/experiences/new">
-                  Share your experience
-                </Link>
-              </Button>
-            </div>
-
-            <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/60">
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-3.5" />
-                Student powered
-              </span>
-
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-3.5" />
-                Free resources
-              </span>
-
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-3.5" />
-                Real experiences
-              </span>
-            </div>
-          </div>
+      <div className="mt-5">
+        <div className="mb-2 text-xs font-semibold text-white/60">
+          Popular searches
         </div>
-      </section>
 
+        <div className="flex flex-wrap gap-2">
+          {[
+            "Google",
+            "Amazon",
+            "Microsoft",
+            "TCS",
+            "DSA",
+            "Aptitude",
+          ].map((item) => (
+            <button
+              key={item}
+              type="button"
+              onClick={() => handlePopularSearch(item)}
+              className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/90 backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/20"
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+        <Button
+          asChild
+          size="lg"
+          variant="secondary"
+          className="transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+        >
+          <Link to="/experiences">
+            Browse experiences
+            <ArrowRight className="ml-1 size-4" />
+          </Link>
+        </Button>
+
+        <Button
+          asChild
+          size="lg"
+          variant="outline"
+          className="border-white/40 bg-transparent text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/15 hover:text-primary-foreground"
+        >
+          <Link to="/experiences/new">
+            Share your experience
+          </Link>
+        </Button>
+      </div>
+
+      <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/60">
+        <span className="flex items-center gap-1.5">
+          <CheckCircle2 className="size-3.5" />
+          Student powered
+        </span>
+
+        <span className="flex items-center gap-1.5">
+          <CheckCircle2 className="size-3.5" />
+          Free resources
+        </span>
+
+        <span className="flex items-center gap-1.5">
+          <CheckCircle2 className="size-3.5" />
+          Real experiences
+        </span>
+      </div>
+
+    </div>
+  </div>
+</section>
       {/* ===================================================
           STATISTICS
       =================================================== */}
