@@ -59,6 +59,13 @@ function unwrap<T>({ data, error }: { data: T | null; error: unknown }): T {
   return data as T;
 }
 
+/** Current user id, used to stamp ownership on new rows (required by RLS). */
+export async function currentUserId(): Promise<string> {
+  const { data } = await supabase.auth.getUser();
+  if (!data.user) throw new Error("Please sign in to continue.");
+  return data.user.id;
+}
+
 /* ---------------- Companies ---------------- */
 export const companiesApi = {
   list: async () =>
