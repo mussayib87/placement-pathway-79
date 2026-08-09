@@ -1,31 +1,102 @@
-import { useState } from "react";
-import notesData from "./notesData";
+import { useEffect, useMemo, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import "./Notes.css";
 
 export default function Notes() {
+  const [notes, setNotes] = useState([]);
   const [year, setYear] = useState("");
   const [semester, setSemester] = useState("");
   const [branch, setBranch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const years = Object.keys(notesData);
+  useEffect(() => {
+    async function fetchNotes() {
+      const { data, error } = await supabase
+        .from("notes")
+        .select("*")
+        .order("id", { ascending: true });
 
-  const semesters = year
-    ? Object.keys(notesData[year])
-    : [];
+      if (error) {
+        console.error("Error loading notes:", error);
+        setError("Unable to load notes.");
+      } else {
+        setNotes(data || []);
+      }
 
-  const branches =
-    year && semester
-      ? Object.keys(notesData[year][semester])
-      : [];
+      setLoading(false);
+    }
 
-  const subjects =
-    year && semester && branch
-      ? Object.keys(notesData[year][semester][branch])
-      : [];
+    fetchNotes();
+  }, []);
+
+  const years = useMemo(
+    () => [...new Set(notes.map((note) => note.year))],
+    [notes]
+  );
+
+  const semesters = useMemo(
+    () => [
+      ...new Set(
+        notes
+          .filter((note) => note.year === year)
+          .map((note) => note.semester)
+      ),
+    ],
+    [notes, year]
+  );
+
+  const branches = useMemo(
+    () => [
+      ...new Set(
+        notes
+          .filter(
+            (note) =>
+              note.year === year &&
+              note.semester === semester
+          )
+          .map((note) => note.branch)
+      ),
+    ],
+    [notes, year, semester]
+  );
+
+  const subjects = useMemo(
+    () => [
+      ...new Set(
+        notes
+          .filter(
+            (note) =>
+              note.year === year &&
+              note.semester === semester &&
+              note.branch === branch
+          )
+          .map((note) => note.subject)
+      ),
+    ],
+    [notes, year, semester, branch]
+  );
+
+  if (loading) {
+    return (
+      <div className="notes-page">
+        <h1>Engineering Notes</h1>
+        <p>Loading notes...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="notes-page">
+        <h1>Engineering Notes</h1>
+        <p>{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="notes-page">
-
       <h1>Engineering Notes</h1>
 
       {/* YEAR */}
@@ -98,21 +169,27 @@ export default function Notes() {
                 <div className="subject-card" key={subject}>
                   <h3>{subject}</h3>
 
-                  {notesData[year][semester][branch][subject].map(
-                    (note) => (
-                      <div className="note" key={note.title}>
+                  {notes
+                    .filter(
+                      (note) =>
+                        note.year === year &&
+                        note.semester === semester &&
+                        note.branch === branch &&
+                        note.subject === subject
+                    )
+                    .map((note) => (
+                      <div className="note" key={note.id}>
                         <span>{note.title}</span>
 
                         <a
-                          href={note.file}
+                          href={note.file_url}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
                           View PDF
                         </a>
                       </div>
-                    )
-                  )}
+                    ))}
                 </div>
               ))
             )}
@@ -121,4 +198,4 @@ export default function Notes() {
       )}
     </div>
   );
-    }
+                      }
