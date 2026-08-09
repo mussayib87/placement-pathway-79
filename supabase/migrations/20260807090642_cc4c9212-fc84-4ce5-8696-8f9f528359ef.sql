@@ -69,3 +69,46 @@ INSERT INTO public.resources (title, company, category, description, type, link)
 ('System Design Primer', 'Amazon', 'System Design', 'The classic GitHub repository for scalable system design preparation.', 'Website', 'https://github.com/donnemartin/system-design-primer'),
 ('Google Interview Prep Notes', 'Google', 'Interview Prep', 'Compiled notes from seniors who cleared Google onsite rounds.', 'Notes', 'https://techdevguide.withgoogle.com/'),
 ('Core CS Subjects PDF', NULL, 'Core CS', 'OS, DBMS, CN and OOPs revision notes in a single PDF.', 'PDF', 'https://www.geeksforgeeks.org/last-minute-notes-operating-systems/');
+INSERT INTO public.resources (title, company, category, description, type, link) VALUES
+('Striver SDE Sheet', NULL, 'DSA', '191 curated problems covering every DSA pattern asked in placements.', 'DSA Sheet', 'https://takeuforward.org/interviews/strivers-sde-sheet-top-coding-interview-problems'),
+('Neetcode 150', NULL, 'DSA', 'Video explanations for the 150 most common interview problems.', 'YouTube', 'https://neetcode.io/practice'),
+('Indiabix Aptitude', NULL, 'Aptitude', 'Topic-wise quantitative aptitude practice with detailed solutions.', 'Website', 'https://www.indiabix.com/aptitude/questions-and-answers/'),
+('System Design Primer', 'Amazon', 'System Design', 'The classic GitHub repository for scalable system design preparation.', 'Website', 'https://github.com/donnemartin/system-design-primer'),
+('Google Interview Prep Notes', 'Google', 'Interview Prep', 'Compiled notes from seniors who cleared Google onsite rounds.', 'Notes', 'https://techdevguide.withgoogle.com/'),
+('Core CS Subjects PDF', NULL, 'Core CS', 'OS, DBMS, CN and OOPs revision notes in a single PDF.', 'PDF', 'https://www.geeksforgeeks.org/last-minute-notes-operating-systems/');
+
+
+-- 👇 ADD THIS HERE
+
+-- 1. Create Storage bucket
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('notes', 'notes', true)
+ON CONFLICT (id) DO NOTHING;
+
+
+-- 2. Storage policies
+CREATE POLICY "Public can read notes"
+ON storage.objects
+FOR SELECT
+TO anon, authenticated
+USING (bucket_id = 'notes');
+
+CREATE POLICY "Public can upload notes"
+ON storage.objects
+FOR INSERT
+TO anon, authenticated
+WITH CHECK (bucket_id = 'notes');
+
+CREATE POLICY "Public can update notes"
+ON storage.objects
+FOR UPDATE
+TO anon, authenticated
+USING (bucket_id = 'notes')
+WITH CHECK (bucket_id = 'notes');
+
+CREATE POLICY "Public can delete notes"
+ON storage.objects
+FOR DELETE
+TO anon, authenticated
+USING (bucket_id = 'notes');
+
