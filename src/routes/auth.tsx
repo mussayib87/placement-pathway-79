@@ -72,7 +72,9 @@ function AuthPage() {
           email,
           password,
           options: {
-            emailRedirectTo: window.location.origin,
+            emailRedirectTo: redirectTo
+              ? `${window.location.origin}${redirectTo}`
+              : window.location.origin,
             data: { display_name: displayName || email.split("@")[0] },
           },
         });
@@ -85,7 +87,7 @@ function AuthPage() {
         });
         if (error) throw error;
         toast.success("Welcome back!");
-        navigate({ to: "/dashboard", replace: true });
+        goNext();
       }
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Something went wrong");
@@ -97,7 +99,9 @@ function AuthPage() {
   async function onGoogle() {
     setBusy(true);
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: redirectTo
+        ? `${window.location.origin}${redirectTo}`
+        : window.location.origin,
     });
     if (result.error) {
       setBusy(false);
@@ -105,7 +109,7 @@ function AuthPage() {
       return;
     }
     if (result.redirected) return;
-    navigate({ to: "/dashboard", replace: true });
+    goNext();
   }
 
   async function onForgot() {
