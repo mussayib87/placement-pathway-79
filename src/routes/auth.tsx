@@ -9,6 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/auth")({
+  validateSearch: (s: Record<string, unknown>) => ({
+    next: typeof s['next'] === "string" ? s['next'] : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Sign in — Placement Resource Hub" },
@@ -28,19 +31,36 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
+/** Only same-origin relative paths may be used as a post-login redirect. */
+function safeNext(next?: string) {
+  return next && next.startsWith("/") && !next.startsWith("//") ? next : null;
+}
+
 function AuthPage() {
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
+  const redirectTo = safeNext(next);
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [busy, setBusy] = useState(false);
 
+  function goNext() {
+    if (redirectTo) {
+      window.location.href = redirectTo;
+      return;
+    }
+    navigate({ to: "/dashboard", replace: true });
+  }
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/dashboard", replace: true });
+      if (!data.session) return;
+      if (redirectTo) window.location.href = redirectTo;
+      else navigate({ to: "/dashboard", replace: true });
     });
-  }, [navigate]);
+  }, [navigate, redirectTo]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
