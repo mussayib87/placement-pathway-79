@@ -13,14 +13,19 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CompaniesRouteImport } from './routes/companies'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as NotesRouteImport } from './routes/notes'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as CompaniesIdRouteImport } from './routes/companies/$id'
 import { Route as ExperiencesIndexRouteImport } from './routes/experiences.index'
 import { Route as ExperiencesNewRouteImport } from './routes/experiences.new'
 import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
 import { Route as ResourcesNewRouteImport } from './routes/resources.new'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as ExperiencesIdIndexRouteImport } from './routes/experiences.$id.index'
 import { Route as ExperiencesIdEditRouteImport } from './routes/experiences.$id.edit'
 import { Route as ResourcesIdEditRouteImport } from './routes/resources.$id.edit'
@@ -45,6 +50,11 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NotesRoute = NotesRouteImport.update({
   id: '/notes',
   path: '/notes',
@@ -60,6 +70,18 @@ const SearchRoute = SearchRouteImport.update({
   path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CompaniesIdRoute = CompaniesIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -85,6 +107,17 @@ const ResourcesNewRoute = ResourcesNewRouteImport.update({
   path: '/resources/new',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Char91DotmcpChar93InvokeToolToolRoute =
+  Char91DotmcpChar93InvokeToolToolRouteImport.update({
+    id: '/.mcp/invoke-tool/$tool',
+    path: '/.mcp/invoke-tool/$tool',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ExperiencesIdIndexRoute = ExperiencesIdIndexRouteImport.update({
   id: '/experiences/$id/',
   path: '/experiences/$id/',
@@ -106,14 +139,19 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/companies': typeof CompaniesRouteWithChildren
   '/dashboard': typeof DashboardRoute
+  '/mcp': typeof McpRoute
   '/notes': typeof NotesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/search': typeof SearchRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/companies/$id': typeof CompaniesIdRoute
   '/experiences/new': typeof ExperiencesNewRoute
   '/resources/new': typeof ResourcesNewRoute
   '/experiences/': typeof ExperiencesIndexRoute
   '/resources/': typeof ResourcesIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/experiences/$id/edit': typeof ExperiencesIdEditRoute
   '/resources/$id/edit': typeof ResourcesIdEditRoute
   '/experiences/$id/': typeof ExperiencesIdIndexRoute
@@ -123,14 +161,19 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/companies': typeof CompaniesRouteWithChildren
   '/dashboard': typeof DashboardRoute
+  '/mcp': typeof McpRoute
   '/notes': typeof NotesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/search': typeof SearchRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/companies/$id': typeof CompaniesIdRoute
   '/experiences/new': typeof ExperiencesNewRoute
   '/resources/new': typeof ResourcesNewRoute
   '/experiences': typeof ExperiencesIndexRoute
   '/resources': typeof ResourcesIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/experiences/$id/edit': typeof ExperiencesIdEditRoute
   '/resources/$id/edit': typeof ResourcesIdEditRoute
   '/experiences/$id': typeof ExperiencesIdIndexRoute
@@ -141,14 +184,19 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/companies': typeof CompaniesRouteWithChildren
   '/dashboard': typeof DashboardRoute
+  '/mcp': typeof McpRoute
   '/notes': typeof NotesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/search': typeof SearchRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/companies/$id': typeof CompaniesIdRoute
   '/experiences/new': typeof ExperiencesNewRoute
   '/resources/new': typeof ResourcesNewRoute
   '/experiences/': typeof ExperiencesIndexRoute
   '/resources/': typeof ResourcesIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/experiences/$id/edit': typeof ExperiencesIdEditRoute
   '/resources/$id/edit': typeof ResourcesIdEditRoute
   '/experiences/$id/': typeof ExperiencesIdIndexRoute
@@ -160,14 +208,19 @@ export interface FileRouteTypes {
     | '/auth'
     | '/companies'
     | '/dashboard'
+    | '/mcp'
     | '/notes'
     | '/reset-password'
     | '/search'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/companies/$id'
     | '/experiences/new'
     | '/resources/new'
     | '/experiences/'
     | '/resources/'
+    | '/.lovable/oauth/consent'
+    | '/.mcp/invoke-tool/$tool'
     | '/experiences/$id/edit'
     | '/resources/$id/edit'
     | '/experiences/$id/'
@@ -177,14 +230,19 @@ export interface FileRouteTypes {
     | '/auth'
     | '/companies'
     | '/dashboard'
+    | '/mcp'
     | '/notes'
     | '/reset-password'
     | '/search'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/companies/$id'
     | '/experiences/new'
     | '/resources/new'
     | '/experiences'
     | '/resources'
+    | '/.lovable/oauth/consent'
+    | '/.mcp/invoke-tool/$tool'
     | '/experiences/$id/edit'
     | '/resources/$id/edit'
     | '/experiences/$id'
@@ -194,14 +252,19 @@ export interface FileRouteTypes {
     | '/auth'
     | '/companies'
     | '/dashboard'
+    | '/mcp'
     | '/notes'
     | '/reset-password'
     | '/search'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/companies/$id'
     | '/experiences/new'
     | '/resources/new'
     | '/experiences/'
     | '/resources/'
+    | '/.lovable/oauth/consent'
+    | '/.mcp/invoke-tool/$tool'
     | '/experiences/$id/edit'
     | '/resources/$id/edit'
     | '/experiences/$id/'
@@ -212,13 +275,18 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   CompaniesRoute: typeof CompaniesRouteWithChildren
   DashboardRoute: typeof DashboardRoute
+  McpRoute: typeof McpRoute
   NotesRoute: typeof NotesRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SearchRoute: typeof SearchRoute
+  Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   ExperiencesNewRoute: typeof ExperiencesNewRoute
   ResourcesNewRoute: typeof ResourcesNewRoute
   ExperiencesIndexRoute: typeof ExperiencesIndexRoute
   ResourcesIndexRoute: typeof ResourcesIndexRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
+  Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ExperiencesIdEditRoute: typeof ExperiencesIdEditRoute
   ResourcesIdEditRoute: typeof ResourcesIdEditRoute
   ExperiencesIdIndexRoute: typeof ExperiencesIdIndexRoute
@@ -254,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/notes': {
       id: '/notes'
       path: '/notes'
@@ -273,6 +348,20 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/list-tools': {
+      id: '/.mcp/list-tools'
+      path: '/.mcp/list-tools'
+      fullPath: '/.mcp/list-tools'
+      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/companies/$id': {
@@ -308,6 +397,20 @@ declare module '@tanstack/react-router' {
       path: '/resources/new'
       fullPath: '/resources/new'
       preLoaderRoute: typeof ResourcesNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/experiences/$id/': {
@@ -351,13 +454,19 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   CompaniesRoute: CompaniesRouteWithChildren,
   DashboardRoute: DashboardRoute,
+  McpRoute: McpRoute,
   NotesRoute: NotesRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SearchRoute: SearchRoute,
+  Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   ExperiencesNewRoute: ExperiencesNewRoute,
   ResourcesNewRoute: ResourcesNewRoute,
   ExperiencesIndexRoute: ExperiencesIndexRoute,
   ResourcesIndexRoute: ResourcesIndexRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
+  Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ExperiencesIdEditRoute: ExperiencesIdEditRoute,
   ResourcesIdEditRoute: ResourcesIdEditRoute,
   ExperiencesIdIndexRoute: ExperiencesIdIndexRoute,
@@ -365,3 +474,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

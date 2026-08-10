@@ -1,0 +1,255 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://stlmvfratzkxuwptubvy.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "placement-navigator",
+      "version": "0.1.0",
+      "title": "Placement Navigator"
+    },
+    "tools": [
+      {
+        "name": "list_companies",
+        "title": "List companies",
+        "description": "List companies tracked in the Placement Resource Hub, optionally filtered by name.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "search": {
+              "type": "string",
+              "description": "Filter by company name."
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_experiences",
+        "title": "List interview experiences",
+        "description": "List shared interview experiences, optionally filtered by company or difficulty (Easy, Medium, Hard).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "company": {
+              "type": "string"
+            },
+            "difficulty": {
+              "type": "string",
+              "enum": [
+                "Easy",
+                "Medium",
+                "Hard"
+              ]
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_experience",
+        "title": "Get interview experience",
+        "description": "Fetch the full detail of one interview experience, including rounds, questions and tips.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "Interview experience id."
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_experience",
+        "title": "Share an interview experience",
+        "description": "Create a new interview experience owned by the signed-in user of the Placement Resource Hub.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "student_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "company": {
+              "type": "string",
+              "minLength": 1
+            },
+            "role": {
+              "type": "string",
+              "minLength": 1
+            },
+            "difficulty": {
+              "type": "string",
+              "enum": [
+                "Easy",
+                "Medium",
+                "Hard"
+              ]
+            },
+            "interview_date": {
+              "type": "string",
+              "description": "ISO date, e.g. 2026-03-14."
+            },
+            "rounds": {
+              "type": "string"
+            },
+            "technical_questions": {
+              "type": "string"
+            },
+            "hr_questions": {
+              "type": "string"
+            },
+            "coding_questions": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "tips": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "student_name",
+            "company",
+            "role"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_resources",
+        "title": "List preparation resources",
+        "description": "List curated placement preparation resources, optionally filtered by category, type or search text.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "search": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string",
+              "description": "e.g. DSA, Aptitude, Core CS."
+            },
+            "type": {
+              "type": "string",
+              "description": "e.g. PDF, YouTube, Website."
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_resource",
+        "title": "Add a preparation resource",
+        "description": "Add a new preparation resource owned by the signed-in user of the Placement Resource Hub.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "link": {
+              "type": "string",
+              "format": "uri"
+            },
+            "category": {
+              "type": "string",
+              "minLength": 1,
+              "description": "e.g. DSA, Aptitude, Core CS."
+            },
+            "type": {
+              "type": "string",
+              "minLength": 1,
+              "description": "e.g. PDF, YouTube, Website."
+            },
+            "company": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "title",
+            "link",
+            "category",
+            "type"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
