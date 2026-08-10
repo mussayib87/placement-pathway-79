@@ -61,7 +61,7 @@ export function AIAssistant() {
       ]);
     } catch (error) {
       console.error("AI Assistant error:", error);
-
+alert(JSON.stringify(error, null, 2));
       setMessages((previous) => [
         ...previous,
         {
