@@ -637,10 +637,381 @@ function Home() {
           />
         </div>
       </section>
+      
+            {/* ===================================================
+          QUICK PREPARATION
+      =================================================== */}
+
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-20">
+        <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+          <PreparationChecklist />
+
+          <div className="surface-card flex flex-col justify-between overflow-hidden">
+            <div className="p-6 sm:p-7">
+              <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <GraduationCap className="size-6" />
+              </div>
+
+              <h2 className="mt-5 text-2xl font-extrabold tracking-tight">
+                Your placement journey starts here.
+              </h2>
+
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Explore interview experiences, discover companies,
+                practice coding and find useful resources shared by
+                students.
+              </p>
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                <Link
+                  to="/experiences"
+                  className="group flex items-center justify-between rounded-xl border border-border p-4 transition-all hover:border-primary/30 hover:bg-primary/5"
+                >
+                  <div className="flex items-center gap-3">
+                    <MessagesSquare className="size-5 text-primary" />
+
+                    <div>
+                      <p className="text-sm font-bold">
+                        Interview experiences
+                      </p>
+
+                      <p className="text-xs text-muted-foreground">
+                        Learn from real students
+                      </p>
+                    </div>
+                  </div>
+
+                  <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+                </Link>
+
+                <Link
+                  to="/companies"
+                  className="group flex items-center justify-between rounded-xl border border-border p-4 transition-all hover:border-primary/30 hover:bg-primary/5"
+                >
+                  <div className="flex items-center gap-3">
+                    <Building2 className="size-5 text-primary" />
+
+                    <div>
+                      <p className="text-sm font-bold">
+                        Explore companies
+                      </p>
+
+                      <p className="text-xs text-muted-foreground">
+                        Know what companies ask
+                      </p>
+                    </div>
+                  </div>
+
+                  <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ===================================================
-          QUICK PREPARATION
-      ================================================*/}
-      
+          TOP COMPANIES
+      =================================================== */}
+
+      <section className="border-y border-border bg-muted/30">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-20">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <div className="flex items-center gap-2 text-sm font-bold text-primary">
+                <TrendingUp className="size-4" />
+                Trending companies
+              </div>
+
+              <h2 className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">
+                Where students are preparing
+              </h2>
+
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                Explore companies with interview experiences shared by
+                students.
+              </p>
+            </div>
+
+            <Button asChild variant="outline">
+              <Link to="/companies">
+                View all companies
+                <ArrowRight className="ml-1 size-4" />
+              </Link>
+            </Button>
+          </div>
+
+          <div className="mt-8">
+            {isLoading ? (
+              <CardSkeletonGrid count={6} />
+            ) : topCompanies.length === 0 ? (
+              <EmptyState
+                icon={Building2}
+                title="No companies yet"
+                description="Company information will appear here once students start sharing experiences."
+                actionText="Share an experience"
+                actionTo="/experiences/new"
+              />
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {topCompanies.map((company) => (
+                  <Link
+                    key={company.id}
+                    to="/companies/$id"
+                    params={{ id: company.id }}
+                    className="surface-card group p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex min-w-0 items-center gap-3">
+                        <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                          <Building2 className="size-5" />
+                        </div>
+
+                        <div className="min-w-0">
+                          <h3 className="truncate font-bold transition-colors group-hover:text-primary">
+                            {company.company_name}
+                          </h3>
+
+                          <p className="mt-0.5 text-xs text-muted-foreground">
+                            Company
+                          </p>
+                        </div>
+                      </div>
+
+                      <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-all group-hover:translate-x-1 group-hover:text-primary" />
+                    </div>
+
+                    <div className="mt-5 flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2">
+                      <span className="text-xs font-medium text-muted-foreground">
+                        Interview experiences
+                      </span>
+
+                      <span className="text-sm font-extrabold text-primary">
+                        {company.experiences}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================================================
+          RECENT EXPERIENCES
+      =================================================== */}
+
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-20">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+          <div>
+            <div className="flex items-center gap-2 text-sm font-bold text-primary">
+              <MessagesSquare className="size-4" />
+              Student experiences
+            </div>
+
+            <h2 className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">
+              Learn from real interviews
+            </h2>
+
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              Read what students experienced during their placement
+              interviews and use their insights to prepare better.
+            </p>
+          </div>
+
+          <Button asChild variant="outline">
+            <Link to="/experiences">
+              Browse all
+              <ArrowRight className="ml-1 size-4" />
+            </Link>
+          </Button>
+        </div>
+
+        <div className="mt-8">
+          {isLoading ? (
+            <CardSkeletonGrid count={6} />
+          ) : experiences.data?.length ? (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {experiences.data.slice(0, 6).map((experience) => (
+                <ExperiencePreview
+                  key={experience.id}
+                  exp={experience}
+                />
+              ))}
+            </div>
+          ) : (
+            <EmptyState
+              icon={MessagesSquare}
+              title="No interview experiences yet"
+              description="Be the first student to share an interview experience and help others prepare."
+              actionText="Share your experience"
+              actionTo="/experiences/new"
+            />
+          )}
+        </div>
+      </section>
+
+      {/* ===================================================
+          RESOURCES
+      =================================================== */}
+
+      <section className="border-y border-border bg-muted/30">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-20">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <div className="flex items-center gap-2 text-sm font-bold text-primary">
+                <BookOpen className="size-4" />
+                Placement resources
+              </div>
+
+              <h2 className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">
+                Resources to help you prepare
+              </h2>
+
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                Find useful study material, coding resources and
+                placement preparation content.
+              </p>
+            </div>
+
+            <Button asChild variant="outline">
+              <Link to="/resources">
+                View all resources
+                <ArrowRight className="ml-1 size-4" />
+              </Link>
+            </Button>
+          </div>
+
+          <div className="mt-8">
+            {isLoading ? (
+              <CardSkeletonGrid count={6} />
+            ) : resources.data?.length ? (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {resources.data.slice(0, 6).map((resource) => (
+                  <div
+                    key={resource.id}
+                    className="surface-card group flex flex-col p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                        <BookOpen className="size-5" />
+                      </div>
+
+                      {resource.url && (
+                        <a
+                          href={resource.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-primary"
+                          aria-label={`Open ${resource.title}`}
+                        >
+                          <ExternalLink className="size-4" />
+                        </a>
+                      )}
+                    </div>
+
+                    <h3 className="mt-5 font-bold transition-colors group-hover:text-primary">
+                      {resource.title}
+                    </h3>
+
+                    {resource.description && (
+                      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+                        {resource.description}
+                      </p>
+                    )}
+
+                    <div className="mt-auto pt-5">
+                      {resource.url ? (
+                        <a
+                          href={resource.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-sm font-bold text-primary transition-all hover:gap-2.5"
+                        >
+                          Open resource
+                          <ArrowRight className="size-4" />
+                        </a>
+                      ) : (
+                        <span className="text-xs font-semibold text-muted-foreground">
+                          Resource available in the hub
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <EmptyState
+                icon={BookOpen}
+                title="No resources yet"
+                description="Study material and placement resources will appear here once they are added."
+              />
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================================================
+          FINAL CTA
+      =================================================== */}
+
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-20">
+        <div className="gradient-hero relative overflow-hidden rounded-3xl px-6 py-12 text-center shadow-xl sm:px-10 sm:py-16">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-20 -right-20 size-56 rounded-full bg-white/10 blur-3xl"
+          />
+
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-24 -left-20 size-64 rounded-full bg-white/10 blur-3xl"
+          />
+
+          <div className="relative mx-auto max-w-2xl text-primary-foreground">
+            <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm">
+              <Brain className="size-7" />
+            </div>
+
+            <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">
+              Ready to prepare smarter?
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">
+              Stop preparing blindly. Learn from real interview
+              experiences and use the right resources for your placement
+              journey.
+            </p>
+
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+              <Button
+                asChild
+                size="lg"
+                variant="secondary"
+                className="transition-all hover:-translate-y-0.5 hover:shadow-lg"
+              >
+                <Link to="/experiences">
+                  Start exploring
+                  <ArrowRight className="ml-1 size-4" />
+                </Link>
+              </Button>
+
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-white/40 bg-transparent text-primary-foreground hover:bg-white/15 hover:text-primary-foreground"
+              >
+                <Link to="/experiences/new">
+                  Share your experience
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+                    }
 
         
