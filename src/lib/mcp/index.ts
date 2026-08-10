@@ -26,5 +26,5 @@ export default defineMcp({
     createExperience,
     listResources,
     createResource,
-  ] as unknown as ToolDefinition[],
+  ] as unknown as Parameters<typeof defineMcp>[0]["tools"],
 });

@@ -60,7 +60,11 @@ function Consent() {
       setError(error.message);
       return;
     }
-    const target = data?.redirect_url ?? data?.redirect_to;
+    const result = data as unknown as {
+      redirect_url?: string;
+      redirect_to?: string;
+    } | null;
+    const target = result?.redirect_url ?? result?.redirect_to;
     if (!target) {
       setBusy(false);
       setError("No redirect returned by the authorization server.");
