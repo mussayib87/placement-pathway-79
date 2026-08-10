@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { AIAssistant } from "@/components/AIAssistant";
 
 function NotFoundComponent() {
   return (
@@ -207,6 +208,7 @@ function RootComponent() {
         richColors
         position="top-right"
       />
+      <AIAssistant />
     </QueryClientProvider>
   );
             }
