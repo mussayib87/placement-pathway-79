@@ -1,4 +1,4 @@
-import { auth, defineMcp } from "@lovable.dev/mcp-js";
+import { auth, defineMcp, type AnyToolDefinition } from "@lovable.dev/mcp-js";
 import listCompanies from "./tools/list-companies";
 import listExperiences from "./tools/list-experiences";
 import getExperience from "./tools/get-experience";
@@ -26,5 +26,5 @@ export default defineMcp({
     createExperience,
     listResources,
     createResource,
-  ],
+  ] as unknown as AnyToolDefinition[],
 });

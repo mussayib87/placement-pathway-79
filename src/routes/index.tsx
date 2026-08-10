@@ -898,9 +898,9 @@ function Home() {
                         <BookOpen className="size-5" />
                       </div>
 
-                      {resource.url && (
+                      {resource.link && (
                         <a
-                          href={resource.url}
+                          href={resource.link}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-primary"
@@ -922,9 +922,9 @@ function Home() {
                     )}
 
                     <div className="mt-auto pt-5">
-                      {resource.url ? (
+                      {resource.link ? (
                         <a
-                          href={resource.url}
+                          href={resource.link}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-1.5 text-sm font-bold text-primary transition-all hover:gap-2.5"
