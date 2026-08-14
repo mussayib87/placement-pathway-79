@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import {
   Outlet,
   Link,
@@ -7,13 +8,18 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "@/components/Navbar";
+
 import { Footer } from "@/components/Footer";
+
 import { Toaster } from "@/components/ui/sonner";
+
 import { AIAssistant } from "@/components/AIAssistant";
 
 function NotFoundComponent() {
@@ -106,26 +112,114 @@ export const Route =
   createRootRouteWithContext<{ queryClient: QueryClient }>()({
     head: () => ({
       meta: [
-        { charSet: "utf-8" },
+        {
+          charSet: "utf-8",
+        },
+
         {
           name: "viewport",
           content: "width=device-width, initial-scale=1",
         },
+
+        // Basic SEO title
         {
-          title: "Placement Resource Hub",
+          title:
+            "Placement Resource Hub — Interview Prep, All in One Place",
         },
+
+        // Basic SEO description
         {
           name: "description",
           content:
-            "Centralized placement prep: interview experiences, company insights and curated coding resources.",
+            "Prepare for placements with real interview experiences, company insights, coding resources, aptitude preparation and curated placement resources — all in one searchable hub.",
         },
+
+        // Canonical URL
+        {
+          link: "canonical",
+          href: "https://placement-pathway-79.vercel.app/",
+        },
+
+        // Open Graph — LinkedIn, Facebook, WhatsApp, etc.
         {
           property: "og:type",
           content: "website",
         },
+
+        {
+          property: "og:title",
+          content:
+            "Placement Resource Hub — Interview Prep, All in One Place",
+        },
+
+        {
+          property: "og:description",
+          content:
+            "Real interview experiences, company insights, coding resources and placement preparation — all in one searchable hub.",
+        },
+
+        {
+          property: "og:url",
+          content: "https://placement-pathway-79.vercel.app/",
+        },
+
+        {
+          property: "og:site_name",
+          content: "Placement Resource Hub",
+        },
+
+        // IMPORTANT:
+        // Create /public/og-image.png for this image to appear
+        // in LinkedIn's preview card.
+        {
+          property: "og:image",
+          content:
+            "https://placement-pathway-79.vercel.app/og-image.png",
+        },
+
+        {
+          property: "og:image:alt",
+          content:
+            "Placement Resource Hub — Interview preparation platform",
+        },
+
+        {
+          property: "og:image:type",
+          content: "image/png",
+        },
+
+        {
+          property: "og:image:width",
+          content: "1200",
+        },
+
+        {
+          property: "og:image:height",
+          content: "630",
+        },
+
+        // Twitter / X preview
         {
           name: "twitter:card",
           content: "summary_large_image",
+        },
+
+        {
+          name: "twitter:title",
+          content:
+            "Placement Resource Hub — Interview Prep, All in One Place",
+        },
+
+        {
+          name: "twitter:description",
+          content:
+            "Real interview experiences, company insights, coding resources and placement preparation — all in one searchable hub.",
+        },
+
+        {
+          name: "twitter:image",
+          content:
+            "https://placement-pathway-79.vercel.app/og-image.png",
         },
       ],
 
@@ -143,19 +237,22 @@ export const Route =
           rel: "stylesheet",
           href: appCss,
         },
+
         {
           rel: "preconnect",
           href: "https://fonts.googleapis.com",
         },
+
         {
           rel: "preconnect",
           href: "https://fonts.gstatic.com",
-          crossOrigin: "anonymous",
         },
+
         {
           rel: "stylesheet",
           href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap",
         },
+
         {
           rel: "icon",
           href: "/favicon.ico",
@@ -165,11 +262,8 @@ export const Route =
     }),
 
     shellComponent: RootShell,
-
     component: RootComponent,
-
     notFoundComponent: NotFoundComponent,
-
     errorComponent: ErrorComponent,
   });
 
@@ -208,7 +302,8 @@ function RootComponent() {
         richColors
         position="top-right"
       />
+
       <AIAssistant />
     </QueryClientProvider>
   );
-            }
+}
