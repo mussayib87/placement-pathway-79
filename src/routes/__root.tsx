@@ -15,11 +15,8 @@ import appCss from "../styles.css?url";
 
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "@/components/Navbar";
-
 import { Footer } from "@/components/Footer";
-
 import { Toaster } from "@/components/ui/sonner";
-
 import { AIAssistant } from "@/components/AIAssistant";
 
 function NotFoundComponent() {
@@ -121,26 +118,31 @@ export const Route =
           content: "width=device-width, initial-scale=1",
         },
 
-        // Basic SEO title
+        // Page title
         {
           title:
             "Placement Resource Hub — Interview Prep, All in One Place",
         },
 
-        // Basic SEO description
+        // SEO description
         {
           name: "description",
           content:
-            "Prepare for placements with real interview experiences, company insights, coding resources, aptitude preparation and curated placement resources — all in one searchable hub.",
+            "Placement Resource Hub helps students prepare for technical placements with real interview experiences, company insights, coding resources, aptitude preparation, placement notes, and searchable preparation materials — all in one place.",
         },
 
         // Canonical URL
         {
-          link: "canonical",
+          property: "og:url",
+          content: "https://placement-pathway-79.vercel.app/",
+        },
+
+        {
+          rel: "canonical",
           href: "https://placement-pathway-79.vercel.app/",
         },
 
-        // Open Graph — LinkedIn, Facebook, WhatsApp, etc.
+        // Open Graph metadata for LinkedIn, Facebook and WhatsApp
         {
           property: "og:type",
           content: "website",
@@ -155,12 +157,7 @@ export const Route =
         {
           property: "og:description",
           content:
-            "Real interview experiences, company insights, coding resources and placement preparation — all in one searchable hub.",
-        },
-
-        {
-          property: "og:url",
-          content: "https://placement-pathway-79.vercel.app/",
+            "Placement Resource Hub helps students prepare for technical placements with real interview experiences, company insights, coding resources, aptitude preparation, placement notes, and searchable preparation materials — all in one place.",
         },
 
         {
@@ -168,9 +165,6 @@ export const Route =
           content: "Placement Resource Hub",
         },
 
-        // IMPORTANT:
-        // Create /public/og-image.png for this image to appear
-        // in LinkedIn's preview card.
         {
           property: "og:image",
           content:
@@ -198,7 +192,7 @@ export const Route =
           content: "630",
         },
 
-        // Twitter / X preview
+        // Twitter / X metadata
         {
           name: "twitter:card",
           content: "summary_large_image",
@@ -213,7 +207,7 @@ export const Route =
         {
           name: "twitter:description",
           content:
-            "Real interview experiences, company insights, coding resources and placement preparation — all in one searchable hub.",
+            "Placement Resource Hub helps students prepare for technical placements with real interview experiences, company insights, coding resources, aptitude preparation, placement notes, and searchable preparation materials — all in one place.",
         },
 
         {
@@ -291,7 +285,6 @@ function RootComponent() {
         <Navbar />
 
         <main className="flex-1">
-          {/* Required: nested routes render here. */}
           <Outlet />
         </main>
 
@@ -306,4 +299,4 @@ function RootComponent() {
       <AIAssistant />
     </QueryClientProvider>
   );
-}
+          }
